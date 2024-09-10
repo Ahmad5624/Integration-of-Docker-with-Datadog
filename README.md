@@ -1,5 +1,5 @@
 
-# Integrate the Docker Container with Datadog
+# Integrate of Docker Container with Datadog
 ### Testing Method
 ✅[Install the Docker Compose](https://docs.docker.com/compose/install/)\
 ✅Clone my respository\
