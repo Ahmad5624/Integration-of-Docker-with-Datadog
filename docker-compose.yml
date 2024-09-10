@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  datadog-agent:
+    image: datadog/agent:latest
+    container_name: datadog-agent
+    environment:
+      - DD_API_KEY=<YOUR API KEY>
+      - DD_SITE=us5.datadoghq.com
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_APM_ENABLED=true
+      - DD_PROCESS_AGENT_ENABLED=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+    platform: linux/amd64
+
+  python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - datadog-agent
+    environment:
+      - DD_AGENT_HOST=datadog-agent
+      - DD_SITE=<YOUR SITE>
+    platform: linux/amd64
